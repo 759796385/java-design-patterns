@@ -22,12 +22,12 @@
  */
 package com.iluwatar.abstractdocument.domain;
 
-import java.util.Map;
-
 import com.iluwatar.abstractdocument.AbstractDocument;
 
+import java.util.Map;
+
 /**
- * Part entity
+ * 零件 entity
  */
 public class Part extends AbstractDocument implements HasType, HasModel, HasPrice {
 

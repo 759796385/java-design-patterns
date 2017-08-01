@@ -22,17 +22,14 @@
  */
 package com.iluwatar.abstractdocument;
 
-import com.iluwatar.abstractdocument.domain.Car;
-import com.iluwatar.abstractdocument.domain.HasModel;
-import com.iluwatar.abstractdocument.domain.HasParts;
-import com.iluwatar.abstractdocument.domain.HasPrice;
-import com.iluwatar.abstractdocument.domain.HasType;
+import com.iluwatar.abstractdocument.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * The Abstract Document pattern enables handling additional, non-static
@@ -55,6 +52,7 @@ public class App {
     LOGGER.info("Constructing parts and car");
 
     Map<String, Object> carProperties = new HashMap<>();
+    //模型属性
     carProperties.put(HasModel.PROPERTY, "300SL");
     carProperties.put(HasPrice.PROPERTY, 10000L);
 
@@ -68,6 +66,7 @@ public class App {
     doorProperties.put(HasModel.PROPERTY, "Lambo");
     doorProperties.put(HasPrice.PROPERTY, 300L);
 
+    //零件属性
     carProperties.put(HasParts.PROPERTY, Arrays.asList(wheelProperties, doorProperties));
 
     Car car = new Car(carProperties);
@@ -76,7 +75,9 @@ public class App {
     LOGGER.info("-> model: {}", car.getModel().get());
     LOGGER.info("-> price: {}", car.getPrice().get());
     LOGGER.info("-> parts: ");
-    car.getParts().forEach(p -> LOGGER.info("\t{}/{}/{}", p.getType().get(), p.getModel().get(), p.getPrice().get()));
+      Stream<Part> partStream = car.getParts();
+      partStream.forEach(p -> LOGGER.info("\t{}/{}/{}", p.getType().get(), p.getModel().get(), p.getPrice().get()));
+      /* 可进一步设计成一棵树用来递归 */
   }
 
   /**

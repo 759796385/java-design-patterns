@@ -52,10 +52,13 @@ public abstract class AbstractDocument implements Document {
     return properties.get(key);
   }
 
+
   @Override
   public <T> Stream<T> children(String key, Function<Map<String, Object>, T> constructor) {
-    Optional<List<Map<String, Object>>> any = Stream.of(get(key)).filter(el -> el != null)
+    /* 获取指定子value，再遍历properties，过滤掉null value，过滤集合， 结果取任意一个 */
+    Optional<List<Map<String, Object>>> any = Stream.of(get(key)).filter(Objects::nonNull)
         .map(el -> (List<Map<String, Object>>) el).findAny();
+    //对于上面的集合进行流式遍历，每个元素再应用constructor函数,  实际上就是一个递归，每个元素再执行children
     return any.isPresent() ? any.get().stream().map(constructor) : Stream.empty();
   }
 
@@ -63,8 +66,7 @@ public abstract class AbstractDocument implements Document {
   public String toString() {
     StringBuilder builder = new StringBuilder();
     builder.append(getClass().getName()).append("[");
-    properties.entrySet()
-        .forEach(e -> builder.append("[").append(e.getKey()).append(" : ").append(e.getValue()).append("]"));
+    properties.forEach((key, value) -> builder.append("[").append(key).append(" : ").append(value).append("]"));
     builder.append("]");
     return builder.toString();
   }

@@ -22,9 +22,9 @@
  */
 package com.iluwatar.abstractdocument.domain;
 
-import java.util.Optional;
-
 import com.iluwatar.abstractdocument.Document;
+
+import java.util.Optional;
 
 /**
  * HasModel trait for static access to 'model' property
@@ -33,7 +33,12 @@ public interface HasModel extends Document {
 
   String PROPERTY = "model";
 
+    /**
+     * java 8 默认的方法实现在设计模式中的使用
+     * @return
+     */
   default Optional<String> getModel() {
+    //都是获取对应的属性
     return Optional.ofNullable((String) get(PROPERTY));
   }
 
