@@ -34,6 +34,7 @@ import java.util.Optional;
 public interface AsyncCallback<T> {
 
   /**
+   * 当异步任务完成时或失败的处理方法。
    * Complete handler which is executed when async task is completed or fails execution.
    *
    * @param value the evaluated value from async task, undefined when execution fails

@@ -47,6 +47,8 @@ public class ThreadAsyncExecutor implements AsyncExecutor {
     CompletableResult<T> result = new CompletableResult<>(callback);
     new Thread(() -> {
       try {
+        //在task.call()没执行完成，线程会阻塞在这。
+        //执行完成，调用setValue(value)
         result.setValue(task.call());
       } catch (Exception ex) {
         result.setException(ex);
@@ -60,6 +62,7 @@ public class ThreadAsyncExecutor implements AsyncExecutor {
     if (!asyncResult.isCompleted()) {
       asyncResult.await();
     }
+    /* 只有任务完成后才能正常调用此值 */
     return asyncResult.getValue();
   }
 
@@ -89,15 +92,22 @@ public class ThreadAsyncExecutor implements AsyncExecutor {
     }
 
     /**
-     * 设置value 当 执行成功 并且 执行回调可以获取到. 唤醒其他等待完成的线程
+     * 设置value 当 执行Callable.call()成功 并且 回调值可以获取到. 唤醒其他等待完成的线程
      *
      * @param value
      *          value of the evaluated task
+     *          即 value= Callable.call()
      */
     void setValue(T value) {
       this.value = value;
       this.state = COMPLETED;
+      /*
+      * if(callback!=null){
+      *   callback.onComplete(value,Optional.<Exception>empty());
+      * }
+      * */
       this.callback.ifPresent(ac -> ac.onComplete(value, Optional.<Exception>empty()));
+      // 任务执行完成。 唤醒该锁池的所有线程重新竞争
       synchronized (lock) {
         lock.notifyAll();
       }

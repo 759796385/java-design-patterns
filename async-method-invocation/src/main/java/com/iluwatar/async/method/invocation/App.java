@@ -67,22 +67,22 @@ public class App {
     AsyncExecutor executor = new ThreadAsyncExecutor();
 
     // start few async tasks with varying processing times, two last with callback handlers
-    AsyncResult<Integer> asyncResult1 = executor.startProcess(lazyval(10, 500));
-    AsyncResult<String> asyncResult2 = executor.startProcess(lazyval("test", 300));
-    AsyncResult<Long> asyncResult3 = executor.startProcess(lazyval(50L, 700));
-    AsyncResult<Integer> asyncResult4 = executor.startProcess(lazyval(20, 400), callback("Callback result 4"));
-    AsyncResult<String> asyncResult5 = executor.startProcess(lazyval("callback", 600), callback("Callback result 5"));
+    AsyncResult<Integer> asyncResult1 = executor.startProcess(lazyval(10, 500));    //4. 完成
+    AsyncResult<String> asyncResult2 = executor.startProcess(lazyval("test", 300)); //1. 最早完成的线程
+    AsyncResult<Long> asyncResult3 = executor.startProcess(lazyval(50L, 700));  //8 最后完成它
+    AsyncResult<Integer> asyncResult4 = executor.startProcess(lazyval(20, 400), callback("Callback result 4")); //3. 完成这个线程，再把结果给 callback回调。
+    AsyncResult<String> asyncResult5 = executor.startProcess(lazyval("callback", 600), callback("Callback result 5"));  //7.完成 把callback结果指 传给回调
 
     // emulate processing in the current thread while async tasks are running in their own threads
-    Thread.sleep(350); // Oh boy I'm working hard here
+    Thread.sleep(350); // Oh boy I'm working hard here  //2. 主线程输出Some hard work done
     log("Some hard work done");
 
-    // wait for completion of the tasks
-    Integer result1 = executor.endProcess(asyncResult1);
-    String result2 = executor.endProcess(asyncResult2);
-    Long result3 = executor.endProcess(asyncResult3);
+    // wait for completion of the tasks 阻塞在这
+    Integer result1 = executor.endProcess(asyncResult1);    //5. 执行完，需要等150 毫秒时间 等第4位完成
+    String result2 = executor.endProcess(asyncResult2); //6. 这个线程早已完成，只花了300毫秒，时间片比他快
+    Long result3 = executor.endProcess(asyncResult3);   //等待asyncResult3完成，第九步是他完成
     asyncResult4.await();
-    asyncResult5.await();
+    asyncResult5.await();//这俩线程早已完成
 
     // log the results of the tasks, callbacks log immediately when complete
     log("Result 1: " + result1);
@@ -100,8 +100,8 @@ public class App {
    *          artificial delay in milliseconds
    * @return new callable for lazy evaluation
    */
-  private static <T> Callable<T> lazyval(T value, long delayMillis) {
-    /* lambda代替匿名构造器 Callable，任务执行处 */
+  public static <T> Callable<T> lazyval(T value, long delayMillis) {
+    /* lambda代替匿名构造器 Callable，实现任务处 */
     return () -> {
       Thread.sleep(delayMillis);
       log("Task completed with: " + value);
@@ -116,8 +116,8 @@ public class App {
    *          callback name
    * @return new async callback
    */
-  private static <T> AsyncCallback<T> callback(String name) {
-    /* lambda代替匿名构造器 AsyncCallback , 回调 */
+  public static <T> AsyncCallback<T> callback(String name) {
+    /* lambda代替匿名构造器 AsyncCallback , 实现回调方法 */
     return (value, ex) -> {
       if (ex.isPresent()) {
         log(name + " failed: " + ex.map(Exception::getMessage).orElse(""));
