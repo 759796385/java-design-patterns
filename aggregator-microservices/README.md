@@ -12,12 +12,10 @@ tags:
 
 ## Intent
 
-The user makes a single call to the Aggregator, and the aggregator then calls each relevant microservice and collects
-the data, apply business logic to it, and further publish is as a REST Endpoint.
-More variations of the aggregator are: 
-- Proxy Microservice Design Pattern: A different microservice is called upon the business need. 
-- Chained Microservice Design Pattern: In this case each microservice is dependent/ chained to a series 
-of other microservices.
+用户调用单个聚合器, 聚合器会去调用每个相关的微服务然后将结果汇聚,将业务逻辑应用于它，并进一步发布作为REST端点.
+更多的聚合器变化: 
+- 代理 微服务设计模式:根据不同的业务需要调用微服务. 
+- 链式 微服务设计模式: 微服务之间也会有连续的链式调用依赖.
 
 ![alt text](./etc/aggregator-microservice.png "Aggregator Microservice")
 
