@@ -55,7 +55,7 @@ public abstract class AbstractDocument implements Document {
 
   @Override
   public <T> Stream<T> children(String key, Function<Map<String, Object>, T> constructor) {
-    /* 获取指定子value，再遍历properties，过滤掉null value，过滤集合， 结果取任意一个 */
+    /* 获取指定子value，再遍历properties，过滤掉null value， 结果为any */
     Optional<List<Map<String, Object>>> any = Stream.of(get(key)).filter(Objects::nonNull)
         .map(el -> (List<Map<String, Object>>) el).findAny();
     //对于上面的集合进行流式遍历，每个元素再应用constructor函数,  实际上就是一个递归，每个元素再执行children

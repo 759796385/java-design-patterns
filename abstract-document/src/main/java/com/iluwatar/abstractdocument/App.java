@@ -75,8 +75,10 @@ public class App {
     LOGGER.info("-> model: {}", car.getModel().get());
     LOGGER.info("-> price: {}", car.getPrice().get());
     LOGGER.info("-> parts: ");
-      Stream<Part> partStream = car.getParts();
-      partStream.forEach(p -> LOGGER.info("\t{}/{}/{}", p.getType().get(), p.getModel().get(), p.getPrice().get()));
+    Stream<Part> partStream = car.getParts();
+    /* 一个流operation操作后不能在过滤了 */
+//    System.out.println(partStream.count());
+    partStream.forEach(p -> LOGGER.info("\t{}/{}/{}", p.getType().get(), p.getModel().get(), p.getPrice().get()));
       /* 可进一步设计成一棵树用来递归 */
   }
 

@@ -10,20 +10,20 @@ tags:
  - Difficulty-Intermediate
 ---
 
-## Intent
-Achieve flexibility of untyped languages and keep the type-safety 
+## 目的
+灵活的实现无类型语言性，并保持类型安全.
 
 ![alt text](./etc/abstract-document-base.png "Abstract Document Base")
 
 ![alt text](./etc/abstract-document.png "Abstract Document Traits and Domain")
 
 
-## Applicability
-Use the Abstract Document Pattern when
+## 实用性
+以下情况使用 抽象文档模式
 
-* there is a need to add new properties on the fly
-* you want a flexible way to organize domain in tree like structure
-* you want more loosely coupled system
+* 你需要立即添加一些新的属性
+* 你需要灵活的将实体组织成一棵树结构
+* 你需要一个松耦合系统
 
 
 ## Credits
