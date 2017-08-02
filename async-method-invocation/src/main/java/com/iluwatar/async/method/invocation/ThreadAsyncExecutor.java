@@ -89,8 +89,7 @@ public class ThreadAsyncExecutor implements AsyncExecutor {
     }
 
     /**
-     * Sets the value from successful execution and executes callback if available. Notifies any thread waiting for
-     * completion.
+     * 设置value 当 执行成功 并且 执行回调可以获取到. 唤醒其他等待完成的线程
      *
      * @param value
      *          value of the evaluated task
@@ -105,8 +104,7 @@ public class ThreadAsyncExecutor implements AsyncExecutor {
     }
 
     /**
-     * Sets the exception from failed execution and executes callback if available. Notifies any thread waiting for
-     * completion.
+     * 设置异常 当执行失败  并且 执行回调可以获取到. 唤醒其他等待完成的线程
      *
      * @param exception
      *          exception of the failed task

@@ -63,7 +63,7 @@ public class App {
    * Program entry point
    */
   public static void main(String[] args) throws Exception {
-    // construct a new executor that will run async tasks
+    // 构造一个异步任务执行器
     AsyncExecutor executor = new ThreadAsyncExecutor();
 
     // start few async tasks with varying processing times, two last with callback handlers
@@ -91,6 +91,7 @@ public class App {
   }
 
   /**
+   * 创建一个人工给定的延迟时间去做花时间较多的求值运算回调。
    * Creates a callable that lazily evaluates to given value with artificial delay.
    *
    * @param value
@@ -100,6 +101,7 @@ public class App {
    * @return new callable for lazy evaluation
    */
   private static <T> Callable<T> lazyval(T value, long delayMillis) {
+    /* lambda代替匿名构造器 Callable，任务执行处 */
     return () -> {
       Thread.sleep(delayMillis);
       log("Task completed with: " + value);
@@ -115,6 +117,7 @@ public class App {
    * @return new async callback
    */
   private static <T> AsyncCallback<T> callback(String name) {
+    /* lambda代替匿名构造器 AsyncCallback , 回调 */
     return (value, ex) -> {
       if (ex.isPresent()) {
         log(name + " failed: " + ex.map(Exception::getMessage).orElse(""));

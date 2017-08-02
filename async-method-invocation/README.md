@@ -13,10 +13,8 @@ tags:
 ---
 
 ## Intent
-Asynchronous method invocation is pattern where the calling thread
-is not blocked while waiting results of tasks. The pattern provides parallel
-processing of multiple independent tasks and retrieving the results via
-callbacks or waiting until everything is done. 
+异步方法调用是一种模式，在等待任务的结果时，该调用线程不会被阻塞。
+这个模式让多个独立任务并行处理并通过回调或者等待检索结果，直到任务完成。 
 
 ![alt text](./etc/async-method-invocation.png "Async Method Invocation")
 
