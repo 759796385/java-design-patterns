@@ -49,6 +49,7 @@ public class Aggregator {
    */
   @RequestMapping("/product")
   public Product getProduct() {
+    //微服务聚合器， 一个产品的各个属性由各个微服务进行计算处理。最后汇总到聚合器
     Product product = new Product();
     product.setTitle(informationClient.getProductTitle());
     product.setProductInventories(inventoryClient.getProductInventories());
