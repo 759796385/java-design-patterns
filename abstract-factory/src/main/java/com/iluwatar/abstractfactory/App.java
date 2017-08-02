@@ -100,7 +100,7 @@ public class App {
    *          command line args
    */
   public static void main(String[] args) {
-
+    //比较麻烦的是每一种类型对象都要单独创建。 每一组对象生成于同一个工厂，根据实际应用扩展更多的工厂和实际对象。
     App app = new App();
 
     LOGGER.info("Elf Kingdom");

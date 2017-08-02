@@ -11,20 +11,19 @@ tags:
  - Difficulty-Intermediate
 ---
 
-## Also known as
+## 别称
 Kit
 
-## Intent
-Provide an interface for creating families of related or dependent
-objects without specifying their concrete classes.
+## 目的
+提供一个接口用来创建 一组 没有指定特定类型的有关系或者依赖的对象.
 
 ![alt text](./etc/abstract-factory_1.png "Abstract Factory")
 
-## Applicability
-Use the Abstract Factory pattern when
+## 适用性
+使用抽象工厂模式的情况：
 
-* a system should be independent of how its products are created, composed and represented
-* a system should be configured with one of multiple families of products
+* 一个系统应该独立于它的产品是如何创建、组成和表现的
+* 一个系统应该配置成多个相似的产品
 * a family of related product objects is designed to be used together, and you need to enforce this constraint
 * you want to provide a class library of products, and you want to reveal just their interfaces, not their implementations
 * the lifetime of the dependency is conceptually shorter than the lifetime of the consumer.
