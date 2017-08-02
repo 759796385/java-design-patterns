@@ -25,7 +25,7 @@ package com.iluwatar.adapter;
 /**
  * The interface expected by the client.<br>
  * A Battleship can fire and move.
- *
+ * 适配器暴漏给客户端使用的类
  */
 public interface BattleShip {
 

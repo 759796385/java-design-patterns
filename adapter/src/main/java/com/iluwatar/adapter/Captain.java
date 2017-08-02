@@ -25,6 +25,7 @@ package com.iluwatar.adapter;
 /**
  * The Captain uses {@link BattleShip} to fight. <br>
  * This is the client in the pattern.
+ * 适配器类
  */
 public class Captain implements BattleShip {
 

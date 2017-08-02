@@ -53,6 +53,7 @@ public class App {
    * @param args command line args
    */
   public static void main(String[] args) {
+    //要点 适配器和实际类都要实现 暴漏给客户端的接口
     Captain captain = new Captain(new BattleFishingBoat());
     captain.move();
     captain.fire();

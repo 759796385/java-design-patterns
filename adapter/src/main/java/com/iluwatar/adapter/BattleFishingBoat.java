@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * In this case we added a new function fire to suit the interface. We are reusing the
  * {@link FishingBoat} without changing itself. The Adapter class can just map the functions of the
  * Adaptee or add, delete features of the Adaptee.
+ * 实际使用的类
  *
  */
 public class BattleFishingBoat implements BattleShip {
