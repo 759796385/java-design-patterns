@@ -33,7 +33,7 @@ import java.util.concurrent.ExecutionException;
 public interface AsyncExecutor {
 
   /**
-   * Starts processing of an async task. Returns immediately with async result.
+   * 开始一个异步任务，计算出结果时将立即返回值。
    *
    * @param task task to be executed asynchronously
    * @return async result for the task
@@ -41,6 +41,7 @@ public interface AsyncExecutor {
   <T> AsyncResult<T> startProcess(Callable<T> task);
 
   /**
+   * 开始一个异步任务，计算出结果时将立即返回值。当任务完成时会执行回调函数。
    * Starts processing of an async task. Returns immediately with async result. Executes callback
    * when the task is completed.
    *
@@ -51,6 +52,7 @@ public interface AsyncExecutor {
   <T> AsyncResult<T> startProcess(Callable<T> task, AsyncCallback<T> callback);
 
   /**
+   * 异步任务的处理的末端，尝试去获取结果，如果没有完成任务就阻塞当前线程，如果完成就返回当前线程计算的值.
    * Ends processing of an async task. Blocks the current thread if necessary and returns the
    * evaluated value of the completed task.
    *

@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutionException;
 public interface AsyncResult<T> {
 
   /**
+   * 当前任务的执行状态
    * Status of the async task execution.
    *
    * @return <code>true</code> if execution is completed or failed
@@ -38,6 +39,7 @@ public interface AsyncResult<T> {
   boolean isCompleted();
 
   /**
+   * 获取计算完成的值。 没完成或失败都会抛异常。
    * Gets the value of completed async task.
    *
    * @return evaluated value or throws ExecutionException if execution has failed
@@ -47,6 +49,7 @@ public interface AsyncResult<T> {
   T getValue() throws ExecutionException;
 
   /**
+   * 阻塞当前线程直到异步任务完成。
    * Blocks the current thread until the async task is completed.
    *
    * @throws InterruptedException if the execution is interrupted
