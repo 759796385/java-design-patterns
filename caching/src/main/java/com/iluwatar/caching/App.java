@@ -42,6 +42,15 @@ import org.slf4j.LoggerFactory;
  * should be written back to the backing store (i.e. Database) and help keep both data sources
  * synchronized/up-to-date. This pattern can improve performance and also helps to maintain
  * consistency between data held in the cache and the data in the underlying data store.
+ *
+ * 缓存模式主要介绍四种：
+ * 1.write-through：在单个事务中写入数据到缓存和DB中
+ * 2.write-around：将数据立即写入数据库而不是缓存
+ * 3.write-behind：首先把数据写入到缓存，当缓存满的时候将数据写入到DB。
+ * 4.cache-aside：负责将两个数据源中的数据同步到应用程序
+ *
+ * read-through:包含了上面的四种策略--
+ *  如果数据在缓存中存在，返回数据给调用者，否则从db中查同时存入cache中供未来使用。
  * <p>
  * In this example, the user account ({@link UserAccount}) entity is used as the underlying
  * application data. The cache itself is implemented as an internal (Java) data structure. It adopts
@@ -60,6 +69,7 @@ import org.slf4j.LoggerFactory;
  * @See LRUCache
  * @see CachingPolicy
  *
+ * PS：这个设计模式实现有问题
  */
 public class App {
 
@@ -68,7 +78,7 @@ public class App {
 
   /**
    * Program entry point
-   *
+   * 推荐使用Read-through 和write-around
    * @param args command line args
    */
   public static void main(String[] args) {
@@ -78,21 +88,21 @@ public class App {
                               // installed and socket connection is open).
     AppManager.initCacheCapacity(3);
     App app = new App();
-    app.useReadAndWriteThroughStrategy();
-    app.useReadThroughAndWriteAroundStrategy();
-    app.useReadThroughAndWriteBehindStrategy();
+//    app.useReadAndWriteThroughStrategy();
+//    app.useReadThroughAndWriteAroundStrategy();
+//    app.useReadThroughAndWriteBehindStrategy();
     app.useCacheAsideStategy();
   }
 
   /**
-   * Read-through and write-through
+   * Read-through and write-through 读穿透和写穿透
    */
   public void useReadAndWriteThroughStrategy() {
     LOGGER.info("# CachingPolicy.THROUGH");
     AppManager.initCachingPolicy(CachingPolicy.THROUGH);
 
     UserAccount userAccount1 = new UserAccount("001", "John", "He is a boy.");
-
+    /* 写逻辑：缓存中包含就更新DB，否则直接插入DB。 最后重新设置缓存  */
     AppManager.save(userAccount1);
     LOGGER.info(AppManager.printCacheContent());
     AppManager.find("001");
@@ -100,24 +110,26 @@ public class App {
   }
 
   /**
-   * Read-through and write-around
+   * Read-through and write-around 读穿透和写环绕
    */
   public void useReadThroughAndWriteAroundStrategy() {
     LOGGER.info("# CachingPolicy.AROUND");
     AppManager.initCachingPolicy(CachingPolicy.AROUND);
 
     UserAccount userAccount2 = new UserAccount("002", "Jane", "She is a girl.");
-
+    /* 写逻辑：缓存中包含就更新DB并移除过期缓存，否则直接插入DB  */
+    //更新时数据必须在缓存中，如果不在会有问题。
     AppManager.save(userAccount2);
-    LOGGER.info(AppManager.printCacheContent());
+    LOGGER.info(1 + AppManager.printCacheContent());
+    /* 读逻辑： cache中取，直接返回。 如果miss，从db中读并设置到cache中返回。 */
     AppManager.find("002");
-    LOGGER.info(AppManager.printCacheContent());
+    LOGGER.info(2 + AppManager.printCacheContent());
     userAccount2 = AppManager.find("002");
     userAccount2.setUserName("Jane G.");
     AppManager.save(userAccount2);
-    LOGGER.info(AppManager.printCacheContent());
+    LOGGER.info(3+ AppManager.printCacheContent());
     AppManager.find("002");
-    LOGGER.info(AppManager.printCacheContent());
+    LOGGER.info(4+ AppManager.printCacheContent());
     AppManager.find("002");
   }
 
@@ -127,7 +139,9 @@ public class App {
   public void useReadThroughAndWriteBehindStrategy() {
     LOGGER.info("# CachingPolicy.BEHIND");
     AppManager.initCachingPolicy(CachingPolicy.BEHIND);
-
+/* 读逻辑： cache中取，直接返回。 如果miss，从db中读并设置到cache中返回。 */
+/* 写逻辑：直接写入cache中。 cache是LRU，如果cache满了，取队尾数据存入db   */
+//缺点： cache一挂，会造成数据丢失。需要缓存中间件可靠。
     UserAccount userAccount3 = new UserAccount("003", "Adam", "He likes food.");
     UserAccount userAccount4 = new UserAccount("004", "Rita", "She hates cats.");
     UserAccount userAccount5 = new UserAccount("005", "Isaac", "He is allergic to mustard.");
@@ -152,7 +166,7 @@ public class App {
     LOGGER.info("# CachingPolicy.ASIDE");
     AppManager.initCachingPolicy(CachingPolicy.ASIDE);
     LOGGER.info(AppManager.printCacheContent());
-
+    /* 写逻辑：更新DB，cache过期掉数据*/
     UserAccount userAccount3 = new UserAccount("003", "Adam", "He likes food.");
     UserAccount userAccount4 = new UserAccount("004", "Rita", "She hates cats.");
     UserAccount userAccount5 = new UserAccount("005", "Isaac", "He is allergic to mustard.");
@@ -161,6 +175,8 @@ public class App {
     AppManager.save(userAccount5);
 
     LOGGER.info(AppManager.printCacheContent());
+    /* 读逻辑：先从cache中读，若有则返回。 再从db中读，如果有设置缓存返回。没有直接返回。 */
+    // 存在问题：一直读没有的数据，会一直查DB，造成数据库攻击
     AppManager.find("003");
     LOGGER.info(AppManager.printCacheContent());
     AppManager.find("004");

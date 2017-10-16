@@ -24,7 +24,7 @@ package com.iluwatar.business.delegate;
 
 /**
  * 
- * Client utilizes BusinessDelegate to call the business tier
+ * 客户端 利用 业务委托 去调用业务层
  *
  */
 public class Client {
