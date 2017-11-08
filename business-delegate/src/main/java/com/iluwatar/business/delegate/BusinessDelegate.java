@@ -23,7 +23,7 @@
 package com.iluwatar.business.delegate;
 
 /**
- * BusinessDelegate separates the presentation and business tiers
+ * 业务委托 分离了 表现 和 业务 层
  */
 public class BusinessDelegate {
 
