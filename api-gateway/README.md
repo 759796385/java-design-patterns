@@ -13,8 +13,9 @@ tags:
 
 ## Intent
 
-Aggregate calls to microservices in a single location: the API Gateway. The user makes a single
-call to the API Gateway, and the API Gateway then calls each relevant microservice.
+对单个微服务进行聚合调用: 这就是API网关. 
+用户只需要调用微服务网关API, API网关再去调用各个微服务.
+实际上的微服务不需要暴漏给用户，解决了客户端为了一个功能实际上调用很多接口。
 
 ![alt text](./etc/api-gateway.png "API Gateway")
 

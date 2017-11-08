@@ -45,6 +45,7 @@ public class ApiGateway {
    */
   @RequestMapping("/desktop")
   public DesktopProduct getProductDesktop() {
+    //api 网关和 微服务聚合器 有啥区别？
     DesktopProduct desktopProduct = new DesktopProduct();
     desktopProduct.setImagePath(imageClient.getImagePath());
     desktopProduct.setPrice(priceClient.getPrice());

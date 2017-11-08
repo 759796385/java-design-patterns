@@ -47,6 +47,7 @@ public class WashingMachine {
    * if the object is in appropriate state
    */
   public void wash() {
+    /* 使用内核锁同步线程运行状态，通过状态码来确定如何运行 */
     synchronized (this) {
       LOGGER.info("{}: Actual machine state: {}", Thread.currentThread().getName(), getWashingMachineState());
       if (washingMachineState == WashingMachineState.WASHING) {
@@ -57,7 +58,7 @@ public class WashingMachine {
     }
     LOGGER.info("{}: Doing the washing", Thread.currentThread().getName());
     try {
-      Thread.sleep(50);
+      Thread.sleep(5000);
     } catch (InterruptedException ie) {
       ie.printStackTrace();
     }
