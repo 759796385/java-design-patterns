@@ -12,18 +12,15 @@ tags:
 ---
 
 ## Intent
-Avoid coupling the sender of a request to its receiver by giving
-more than one object a chance to handle the request. Chain the receiving
-objects and pass the request along the chain until an object handles it.
-
+通过给予多个对象一个处理请求的机会，避免将请求的发送方与接收方耦合。链接接收对象并沿链传递请求，直到对象处理它。
 ![alt text](./etc/chain_1.png "Chain of Responsibility")
 
 ## Applicability
 Use Chain of Responsibility when
 
-* more than one object may handle a request, and the handler isn't known a priori. The handler should be ascertained automatically
-* you want to issue a request to one of several objects without specifying the receiver explicitly
-* the set of objects that can handle a request should be specified dynamically
+* 多个对象可以处理请求。, 并且处理器没有优先级. 处理程序自动确定。
+* 您想要向其中一个对象发出请求，而无需显式指定接收器。
+* 可以动态指定处理请求的对象集。
 
 ## Real world examples
 
