@@ -16,9 +16,7 @@ tags:
 Action, Transaction
 
 ## Intent
-Encapsulate a request as an object, thereby letting you
-parameterize clients with different requests, queue or log requests, and
-support undoable operations.
+封装一个请求为对象, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
 
 ![alt text](./etc/command.png "Command")
 

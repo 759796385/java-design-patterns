@@ -22,12 +22,6 @@
  */
 package com.iluwatar.cqrs.app;
 
-import java.math.BigInteger;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.iluwatar.cqrs.commandes.CommandServiceImpl;
 import com.iluwatar.cqrs.commandes.ICommandService;
 import com.iluwatar.cqrs.dto.Author;
@@ -35,6 +29,11 @@ import com.iluwatar.cqrs.dto.Book;
 import com.iluwatar.cqrs.queries.IQueryService;
 import com.iluwatar.cqrs.queries.QueryServiceImpl;
 import com.iluwatar.cqrs.util.HibernateUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * CQRS : Command Query Responsibility Segregation. A pattern used to separate query services from commands or writes
@@ -58,7 +57,7 @@ public class App {
    */
   public static void main(String[] args) {
     ICommandService commands = new CommandServiceImpl();
-
+    /* 修改和创建使用一个service，查询使用另外一个service。 */
     // Create Authors and Books using CommandService
     commands.authorCreated("eEvans", "Eric Evans", "eEvans@email.com");
     commands.authorCreated("jBloch", "Joshua Bloch", "jBloch@email.com");

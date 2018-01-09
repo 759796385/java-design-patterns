@@ -23,11 +23,10 @@
 
 package com.iluwatar.event.queue;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * Event or message queues provide an asynchronous communications protocol, meaning that the sender
@@ -48,8 +47,8 @@ public class App {
    * @throws UnsupportedAudioFileException  when the loaded audio file is unsupported 
    */
   public static void main(String[] args) throws UnsupportedAudioFileException, IOException {
-    Audio.playSound(Audio.getAudioStream("./etc/Bass-Drum-1.wav"), -10.0f);
-    Audio.playSound(Audio.getAudioStream("./etc/Closed-Hi-Hat-1.wav"), -8.0f);
+    Audio.playSound(Audio.getAudioStream("event-queue/etc/Bass-Drum-1.wav"), -10.0f);
+    Audio.playSound(Audio.getAudioStream("event-queue/etc/Closed-Hi-Hat-1.wav"), -8.0f);
     
     System.out.println("Press Enter key to stop the program...");
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

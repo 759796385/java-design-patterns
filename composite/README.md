@@ -12,17 +12,16 @@ tags:
 ---
 
 ## Intent
-Compose objects into tree structures to represent part-whole
-hierarchies. Composite lets clients treat individual objects and compositions
-of objects uniformly.
+将对象组合成树结构，以表示部分-整体层次结构。
+组合模式可以让客户端统一处理对象和对象的组合。
 
 ![alt text](./etc/composite_1.png "Composite")
 
 ## Applicability
 Use the Composite pattern when
 
-* you want to represent part-whole hierarchies of objects
-* you want clients to be able to ignore the difference between compositions of objects and individual objects. Clients will treat all objects in the composite structure uniformly
+* 您想要表示部分-整体层次的对象结构。
+* 您希望客户机能够忽略对象和单个对象的组合之间的差异。客户端将统一处理复合结构中的所有对象。
 
 ## Real world examples
 

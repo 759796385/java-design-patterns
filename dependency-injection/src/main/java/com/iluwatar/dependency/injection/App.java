@@ -63,6 +63,8 @@ public class App {
     advancedSorceress.setTobacco(new SecondBreakfastTobacco());
     advancedSorceress.smoke();
 
+    /* 上面的代码都是主动去配置引用 */
+    /* 下面创建一个Guava的注入类， 注入到GuiceWizard中@Inject 标志的方法 */
     Injector injector = Guice.createInjector(new TobaccoModule());
     GuiceWizard guiceWizard = injector.getInstance(GuiceWizard.class);
     guiceWizard.smoke();

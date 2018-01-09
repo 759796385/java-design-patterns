@@ -11,17 +11,17 @@ tags:
 ---
 
 ## Intent
-CQRS Command Query Responsibility Segregation - Separate the query side from the command side.
+CQRS命令查询职责分离模式——将查询区与命令（增删改）区分开。.
 
 ![alt text](./etc/cqrs.png "CQRS")
 
 ## Applicability
 Use the CQRS pattern when
 
-* you want to scale the queries and commands independently.
-* you want to use different data models for queries and commands. Useful when dealing with complex domains.
-* you want to use architectures like event sourcing or task based UI.
-
+* 您需要独立地扩展查询和命令。
+* 您希望使用不同的数据模型来查询和命令。在处理复杂的域时有用。
+* 您希望使用像事件包或基于任务的UI这样的架构。
+* 主要用来扩展读写分离
 ## Credits
 
 * [Greg Young - CQRS, Task Based UIs, Event Sourcing agh!](http://codebetter.com/gregyoung/2010/02/16/cqrs-task-based-uis-event-sourcing-agh/)

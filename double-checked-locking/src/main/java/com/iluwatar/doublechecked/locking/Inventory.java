@@ -58,8 +58,11 @@ public class Inventory {
    */
   public boolean addItem(Item item) {
     if (items.size() < inventorySize) {
+      /* 并行的时候，满了可能会有多个线程进来 */
       lock.lock();
+      /* 此处串行 */
       try {
+        /*再次检查*/
         if (items.size() < inventorySize) {
           items.add(item);
           LOGGER.info("{}: items.size()={}, inventorySize={}", Thread.currentThread(), items.size(), inventorySize);

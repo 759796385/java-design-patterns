@@ -12,9 +12,8 @@ tags:
 
 ## Intent
 
-Allows send of messages/events between components of an application
-without them needing to know about each other. They only need to know
-about the type of the message/event being sent.
+允许在应用程序的组件之间发送消息/事件。
+他们不需要了解彼此，他们只需要知道发送的消息/事件的类型。
 
 ![data bus pattern uml diagram](./etc/data-bus.urm.png "Data Bus pattern")
 

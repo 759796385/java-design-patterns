@@ -67,6 +67,7 @@ public class App {
     LOGGER.info("");
 
     // collision check
+    //lambda通过流来 替代 对objects的双层for循环遍历
     objects.stream().forEach(o1 -> objects.stream().forEach(o2 -> {
       if (o1 != o2 && o1.intersectsWith(o2)) {
         o1.collision(o2);
